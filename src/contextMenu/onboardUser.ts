@@ -18,7 +18,7 @@ export class OnboardUserContextCommands {
   ) {
     await discordCommandWrapper(interaction, async () => {
       const { targetMessage } = interaction;
-      await onboardUser(interaction, targetMessage.author.id, false);
+      await onboardUser(interaction, targetMessage.author.id, false, false);
     });
   }
 
@@ -31,7 +31,20 @@ export class OnboardUserContextCommands {
   ) {
     await discordCommandWrapper(interaction, async () => {
       const { targetMessage } = interaction;
-      await onboardUser(interaction, targetMessage.author.id, true);
+      await onboardUser(interaction, targetMessage.author.id, true, false);
+    });
+  }
+
+  @ContextMenu({
+    name: 'onboard_mens',
+    type: ApplicationCommandType.Message,
+  })
+  async onboardMensMsgHandler(
+    interaction: MessageContextMenuCommandInteraction
+  ) {
+    await discordCommandWrapper(interaction, async () => {
+      const { targetMessage } = interaction;
+      await onboardUser(interaction, targetMessage.author.id, false, true);
     });
   }
 
@@ -44,7 +57,7 @@ export class OnboardUserContextCommands {
   ) {
     await discordCommandWrapper(interaction, async () => {
       const { targetUser } = interaction;
-      await onboardUser(interaction, targetUser.id, false);
+      await onboardUser(interaction, targetUser.id, false, false);
     });
   }
 
@@ -57,7 +70,18 @@ export class OnboardUserContextCommands {
   ) {
     await discordCommandWrapper(interaction, async () => {
       const { targetUser } = interaction;
-      await onboardUser(interaction, targetUser.id, true);
+      await onboardUser(interaction, targetUser.id, true, false);
+    });
+  }
+
+  @ContextMenu({
+    name: 'onboard_mens',
+    type: ApplicationCommandType.User,
+  })
+  async onboardMensUserHandler(interaction: UserContextMenuCommandInteraction) {
+    await discordCommandWrapper(interaction, async () => {
+      const { targetUser } = interaction;
+      await onboardUser(interaction, targetUser.id, false, true);
     });
   }
 }
