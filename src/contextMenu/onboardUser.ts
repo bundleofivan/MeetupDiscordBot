@@ -78,9 +78,7 @@ export class OnboardUserContextCommands {
     name: 'onboard_mens',
     type: ApplicationCommandType.User,
   })
-  async onboardMensUserHandler(
-    interaction: UserContextMenuCommandInteraction
-  ) {
+  async onboardMensUserHandler(interaction: UserContextMenuCommandInteraction) {
     await discordCommandWrapper(interaction, async () => {
       const { targetUser } = interaction;
       await onboardUser(interaction, targetUser.id, false, true);

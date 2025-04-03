@@ -101,13 +101,13 @@ async function onboardUserCommon(
   if (isFemale) {
     await addServerRole(guild, user.id, 'ladies_lounge');
     logger.info(`User ${fullUsername} added to LadiesLounge`);
-  } 
+  }
 
   if (isMale) {
-    await addServerRole(guild, user.id, 'mens_lounge')
-    logger.info(`User ${fullUsername} added to MensLounge`)
+    await addServerRole(guild, user.id, 'mens_lounge');
+    logger.info(`User ${fullUsername} added to MensLounge`);
   }
-  
+
   await removeServerRole(guild, user.id, 'onboarding');
   logger.info(`User ${fullUsername} onboarded!`);
 }
@@ -119,7 +119,7 @@ export async function onboardUser(
   interaction: CommandInteraction,
   userId: string,
   isFemale: boolean,
-  isMale: boolean,
+  isMale: boolean
 ) {
   const { client } = interaction;
   const user = await client.users.fetch(userId);
