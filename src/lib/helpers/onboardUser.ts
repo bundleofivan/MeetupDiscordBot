@@ -74,6 +74,7 @@ async function onboardUserCommon(
   interaction: CommandInteraction | ButtonInteraction,
   userId: string,
   isFemale: boolean,
+  isMale: boolean,
   nickname?: string
 ) {
   const { guild, client } = interaction;
@@ -100,11 +101,13 @@ async function onboardUserCommon(
   if (isFemale) {
     await addServerRole(guild, user.id, 'ladies_lounge');
     logger.info(`User ${fullUsername} added to LadiesLounge`);
-  } else {
-    // if not female, should auto-convert to male? Or account for non-binary
+  } 
+
+  if (isMale) {
     await addServerRole(guild, user.id, 'mens_lounge')
     logger.info(`User ${fullUsername} added to MensLounge`)
   }
+  
   await removeServerRole(guild, user.id, 'onboarding');
   logger.info(`User ${fullUsername} onboarded!`);
 }
@@ -115,12 +118,13 @@ async function onboardUserCommon(
 export async function onboardUser(
   interaction: CommandInteraction,
   userId: string,
-  isFemale: boolean
+  isFemale: boolean,
+  isMale: boolean,
 ) {
   const { client } = interaction;
   const user = await client.users.fetch(userId);
 
-  await onboardUserCommon(interaction, userId, isFemale);
+  await onboardUserCommon(interaction, userId, isFemale, isMale);
   await interaction.followUp({
     content: strings.replyToModerator,
     ephemeral: true,
@@ -169,6 +173,7 @@ export async function selfOnboardUser(
     interaction,
     user.id,
     userInfo.self.gender === 'FEMALE',
+    userInfo.self.gender === 'MALE',
     cleanedName
   );
   await interaction.followUp({
