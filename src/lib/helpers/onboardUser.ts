@@ -100,6 +100,10 @@ async function onboardUserCommon(
   if (isFemale) {
     await addServerRole(guild, user.id, 'ladies_lounge');
     logger.info(`User ${fullUsername} added to LadiesLounge`);
+  } else {
+    // if not female, should auto-convert to male? Or account for non-binary
+    await addServerRole(guild, user.id, 'mens_lounge')
+    logger.info(`User ${fullUsername} added to MensLounge`)
   }
   await removeServerRole(guild, user.id, 'onboarding');
   logger.info(`User ${fullUsername} onboarded!`);
